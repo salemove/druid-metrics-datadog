@@ -84,6 +84,9 @@ func MetricDefinitions() map[string]Definition {
 	m["segment/dropQueue/count"] = Definition{Type: Gauge}
 	m["segment/size"] = Definition{Type: Gauge}
 	m["segment/overShadowed/count"] = Definition{Type: Gauge}
+	m["segment/underReplicated/count"] = Definition{Type: Gauge}
+	m["segment/count"] = Definition{Type: Gauge}
+	m["segment/unavailable/count"] = Definition{Type: Gauge}
 
 	m["segment/max"] = Definition{Type: Gauge}
 	m["segment/used"] = Definition{Type: Gauge}

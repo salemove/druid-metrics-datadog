@@ -48,6 +48,7 @@ func TestIsExcludedTag(t *testing.T) {
 	assert.Equal(t, true, IsExcludedTag("context"))
 	assert.Equal(t, true, IsExcludedTag("id"))
 	assert.Equal(t, true, IsExcludedTag("interval"))
+	assert.Equal(t, true, IsExcludedTag("taskId"))
 
 	assert.Equal(t, false, IsExcludedTag("feed"))
 	assert.Equal(t, false, IsExcludedTag("host"))

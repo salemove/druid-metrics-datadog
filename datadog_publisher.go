@@ -9,7 +9,7 @@ import (
 
 const SAMPLE_RATE = 1.0
 
-var excludedTags = [...]string{"timestamp", "service", "metric", "value", "context", "id", "interval"}
+var excludedTags = [...]string{"timestamp", "service", "metric", "value", "context", "id", "interval", "taskId"}
 
 type DatadogPublisher struct {
 	client      *statsd.Client
