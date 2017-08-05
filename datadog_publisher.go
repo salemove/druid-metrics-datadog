@@ -32,17 +32,25 @@ func (p *DatadogPublisher) Publish(metric *jason.Object) {
 		return
 	}
 
+	serviceName, err := metric.GetString("service")
+	if err != nil {
+		log.Println("Found a metric without a service name", err, metric)
+		return
+	}
+
+	if serviceName == "druid/peon" {
+		// Skipping all metrics from peon. These are task specific and need some
+		// thinking before sending to DataDog.
+		return
+	}
+
 	definition, ok := p.definitions[metricName]
 	if !ok {
 		log.Println("Found a metric without a definition", metric)
 		return
 	}
 
-	metricKey, err := PrepareMetricKey(metric)
-	if err != nil {
-		log.Println("Unable to prepare metric key", err, metric)
-		return
-	}
+	metricKey := PrepareMetricKey(serviceName, metricName)
 
 	metricValue, err := metric.GetFloat64("value")
 	if err != nil {
@@ -67,20 +75,8 @@ func (p *DatadogPublisher) Publish(metric *jason.Object) {
 	}
 }
 
-func PrepareMetricKey(metric *jason.Object) (string, error) {
-	service, err := metric.GetString("service")
-	if err != nil {
-		return "", err
-	}
-
-	name, err := metric.GetString("metric")
-	if err != nil {
-		return "", err
-	}
-
-	key := strings.Replace(service+"."+name, "/", ".", -1)
-
-	return key, nil
+func PrepareMetricKey(serviceName string, metricName string) string {
+	return strings.Replace(serviceName+"."+metricName, "/", ".", -1)
 }
 
 func PrepareTags(metric *jason.Object) []string {
