@@ -14,6 +14,13 @@ func MetricDefinitions() map[string]Definition {
 	m = make(map[string]Definition)
 
 	m["query/time"] = Definition{Type: Timer}
+	m["query/bytes"] = Definition{Type: Count}
+
+	m["query/node/bytes"] = Definition{Type: Count}
+
+	m["query/success/count"] = Definition{Type: Count}
+	m["query/interrupted/count"] = Definition{Type: Count}
+	m["query/failed/count"] = Definition{Type: Count}
 
 	m["query/node/time"] = Definition{Type: Timer}
 	m["query/node/ttfb"] = Definition{Type: Timer}
@@ -117,6 +124,8 @@ func MetricDefinitions() map[string]Definition {
 
 	m["coordinator-segment/count"] = Definition{Type: Gauge}
 	m["historical-segment/count"] = Definition{Type: Gauge}
+
+	m["jetty/numOpenConnections"] = Definition{Type: Gauge}
 
 	return m
 }
